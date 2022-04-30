@@ -1,0 +1,34 @@
+{% extends 'stock/base.html' %}
+
+{% block title %}Modificar medicamentos{% endblock %}
+{% block content %}
+<h1>Modificar medicamento</h1>
+<form>
+  <div class="mb-3">
+    <label for="txtDescripcion" class="form-label">Descripcion</label>
+    <input type="text" class="form-control" id="txtDescripcion" placeholder="Borfamilamienl" />
+  </div>
+  <div class="mb-3">
+    <label for="txtFabricante" class="form-label">Fabricante</label>
+    <input type="text" class="form-control" id="txtFabricante" placeholder="MarkLab" />
+  </div>
+  <div class="mb-3">
+    <label for="txtContenido" class="form-label">Contenido</label>
+    <input type="text" class="form-control" id="txtContenido" placeholder="30 comprimidos" />
+  </div>
+  <div class="mb-3">
+    <label for="txtGramaje" class="form-label">Gramaje</label>
+    <input type="text" class="form-control" id="txtGramaje" placeholder="200mg" />
+  </div>
+  <div class="mb-3">
+    <label for="txtPrecio" class="form-label">Precio</label>
+    <input type="text" class="form-control" id="txtPrecio" placeholder="$5000" />
+  </div>
+  <div class="mb-3">
+    <label for="txtCantidad" class="form-label">Cantidad</label>
+    <input type="text" class="form-control" id="txtCantidad" placeholder="12" />
+  </div>
+  <button type="submit" class="btn btn-success">Modificar</button>
+  <a href="{% url 'inventario' %}" class="btn btn-outline-danger">Cancelar</a>
+</form>
+{% endblock %}
