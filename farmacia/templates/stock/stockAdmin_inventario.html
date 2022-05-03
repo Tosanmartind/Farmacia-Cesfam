@@ -1,0 +1,86 @@
+{% extends 'stock/base.html' %}
+
+{% block title %}Stock medicamentos{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col">
+    <h1>Consulta de Medicamentos</h1>
+  </div>
+  <div class="col">
+    <a href="{% url 'agregar-medicamentos' %}" class="btn btn-success btn-sm"> + Agregar Medicamento</a>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Codigo</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Fabricante</th>
+      <th scope="col">Contenido</th>
+      <th scope="col">Gramaje</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Modificar</th>
+      <th scope="col">Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Borfamilamienl</td>
+      <td>MarkLab</td>
+      <td>30 comprimidos</td>
+      <td>200mg</td>
+      <td>$5000</td>
+      <td>15</td>
+      <td><a href="{% url 'modificar-medicamentos' %}" class="btn btn-outline-primary">!</a></td>
+      <td><button type="button" class="btn btn-outline-danger">X</button></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Borfamilamienl</td>
+      <td>MarkLab</td>
+      <td>30 comprimidos</td>
+      <td>200mg</td>
+      <td>$5000</td>
+      <td>15</td>
+      <td><a href="{% url 'modificar-medicamentos' %}" class="btn btn-outline-primary">!</a></td>
+      <td><button type="button" class="btn btn-outline-danger">X</button></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Borfamilamienl</td>
+      <td>MarkLab</td>
+      <td>30 comprimidos</td>
+      <td>200mg</td>
+      <td>$5000</td>
+      <td>15</td>
+      <td><a href="{% url 'modificar-medicamentos' %}" class="btn btn-outline-primary">!</a></td>
+      <td><button type="button" class="btn btn-outline-danger">X</button></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Borfamilamienl</td>
+      <td>MarkLab</td>
+      <td>30 comprimidos</td>
+      <td>200mg</td>
+      <td>$5000</td>
+      <td>15</td>
+      <td><a href="{% url 'modificar-medicamentos' %}" class="btn btn-outline-primary">!</a></td>
+      <td><button type="button" class="btn btn-outline-danger">X</button></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Borfamilamienl</td>
+      <td>MarkLab</td>
+      <td>30 comprimidos</td>
+      <td>200mg</td>
+      <td>$5000</td>
+      <td>15</td>
+      <td><a href="{% url 'modificar-medicamentos' %}" class="btn btn-outline-primary">!</a></td>
+      <td><button type="button" class="btn btn-outline-danger">X</button></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

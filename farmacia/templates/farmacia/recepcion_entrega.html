@@ -1,0 +1,21 @@
+{% extends 'farmacia/base.html' %}
+
+{% block title %}Entrega Medicamentos{% endblock %}
+{% block content %}
+<h1>Entrega de Medicamentos (Pagar)</h1>
+<form>
+  <div class="card">
+    <div class="card-header">Disponibles</div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Clorafalamina 100 mg: 1 comprimido cada 24 hrs x 30 dias</li>
+      <li class="list-group-item">Prolomax 200 mg: 2 comprimido cada 8 hrs x 10 dias</li>
+    </ul>
+  </div>
+  <div class="mb-3">
+    <label for="txtPago" class="form-label">Medio de Pago</label>
+    <input type="text" class="form-control" id="txtPago" />
+  </div>
+  <button type="submit" class="btn btn-success">Continuar...</button>
+  <a href="{% url 'recepcion-farmacia' %}" class="btn btn-outline-danger">Cancelar</a>
+</form>
+{% endblock %}
