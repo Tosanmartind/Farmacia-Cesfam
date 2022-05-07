@@ -3,32 +3,37 @@
 {% block title %}Modificar medicamentos{% endblock %}
 {% block content %}
 <h1>Modificar medicamento</h1>
-<form>
-  <div class="mb-3">
+<form action="modificar-medicamentos" method="POST"> {% csrf_token %}
+  <div class="form-group mb-3">
+    <input type="number" class="form-control" name="numCodigo" id="numCodigo" value="{{medicamento.codigo}}" readonly/>
+  </div>
+  <div class="form-group mb-3">
     <label for="txtDescripcion" class="form-label">Descripcion</label>
-    <input type="text" class="form-control" id="txtDescripcion" placeholder="Borfamilamienl" />
+    <input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion" value="{{medicamento.descripcion}}" />
   </div>
-  <div class="mb-3">
+  <div class="form-group mb-3">
     <label for="txtFabricante" class="form-label">Fabricante</label>
-    <input type="text" class="form-control" id="txtFabricante" placeholder="MarkLab" />
+    <input type="text" class="form-control" name="txtFabricante" id="txtFabricante" value="{{medicamento.fabricante}}" />
   </div>
-  <div class="mb-3">
+  <div class="form-group mb-3">
     <label for="txtContenido" class="form-label">Contenido</label>
-    <input type="text" class="form-control" id="txtContenido" placeholder="30 comprimidos" />
+    <input type="number" class="form-control" name="numContenido" id="numContenido" value="{{medicamento.contenido}}" />
   </div>
-  <div class="mb-3">
+  <div class="form-group mb-3">
     <label for="txtGramaje" class="form-label">Gramaje</label>
-    <input type="text" class="form-control" id="txtGramaje" placeholder="200mg" />
+    <input type="number" class="form-control" name="numGramaje" id="numGramaje" value="{{medicamento.gramaje}}" />
   </div>
-  <div class="mb-3">
+  <div class="form-group mb-3">
     <label for="txtPrecio" class="form-label">Precio</label>
-    <input type="text" class="form-control" id="txtPrecio" placeholder="$5000" />
+    <input type="number" class="form-control" name="numPrecio" id="numPrecio" value="{{medicamento.precio}}" />
   </div>
-  <div class="mb-3">
+  <div class="form-group mb-3">
     <label for="txtCantidad" class="form-label">Cantidad</label>
-    <input type="text" class="form-control" id="txtCantidad" placeholder="12" />
+    <input type="number" class="form-control" name="numCantidad" id="numCantidad" value="{{medicamento.cantidad}}" />
   </div>
-  <button type="submit" class="btn btn-success">Modificar</button>
-  <a href="{% url 'inventario' %}" class="btn btn-outline-danger">Cancelar</a>
+  <div class="form-group mb-3">
+    <button type="submit" class="btn btn-success">Modificar</button>
+    <a href="{% url 'inventario' %}" class="btn btn-outline-danger">Cancelar</a>
+  </div>
 </form>
 {% endblock %}

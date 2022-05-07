@@ -3,32 +3,34 @@
 {% block title %}Agregar medicamentos{% endblock %}
 {% block content %}
 <h1>Agregar medicamento</h1>
-<form>
-  <div class="mb-3">
+<form action="agregar-medicamentos" method="POST">{% csrf_token %}
+  <div class="form-group mb-3">
     <label for="txtDescripcion" class="form-label">Descripcion</label>
-    <input type="text" class="form-control" id="txtDescripcion" />
+    <input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion" required/>
   </div>
-  <div class="mb-3">
+  <div class="form-group mb-3">
     <label for="txtFabricante" class="form-label">Fabricante</label>
-    <input type="text" class="form-control" id="txtFabricante" />
+    <input type="text" class="form-control" name="txtFabricante" id="txtFabricante" required/>
   </div>
-  <div class="mb-3">
-    <label for="txtContenido" class="form-label">Contenido</label>
-    <input type="text" class="form-control" id="txtContenido" />
+  <div class="form-group mb-3">
+    <label for="numContenido" class="form-label">Contenido</label>
+    <input type="number" class="form-control" name="numContenido" id="numContenido" required/>
   </div>
-  <div class="mb-3">
-    <label for="txtGramaje" class="form-label">Gramaje</label>
-    <input type="text" class="form-control" id="txtGramaje" />
+  <div class="form-group mb-3">
+    <label for="numGramaje" class="form-label">Gramaje</label>
+    <input type="number" class="form-control" name="numGramaje" id="numGramaje" required/>
   </div>
-  <div class="mb-3">
-    <label for="txtPrecio" class="form-label">Precio</label>
-    <input type="text" class="form-control" id="txtPrecio" />
+  <div class="form-group mb-3">
+    <label for="numPrecio" class="form-label">Precio</label>
+    <input type="number" class="form-control" name="numPrecio" id="numPrecio" required/>
   </div>
-  <div class="mb-3">
-    <label for="txtCantidad" class="form-label">Cantidad</label>
-    <input type="text" class="form-control" id="txtCantidad" />
-  </div>
-  <button type="submit" class="btn btn-success">Ingresar medicamento</button>
-  <a href="{% url 'inventario' %}" class="btn btn-outline-danger">Cancelar</a>
+  <div class="form-group mb-3">
+    <label for="numCantidad" class="form-label">Cantidad</label>
+    <input type="number" class="form-control" name="numCantidad" id="numCantidad" required/>
+  </div class="form-group">
+  <div class="form-group mb-3">
+    <button type="submit" class="btn btn-success">Ingresar medicamento</button>
+    <a href="{% url 'inventario' %}" class="btn btn-outline-danger">Cancelar</a>
+  </div">
 </form>
 {% endblock %}
