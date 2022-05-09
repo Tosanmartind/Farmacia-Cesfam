@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -22,3 +23,17 @@ class Medico(models.Model):
     def __str__(self):
         texto = "{0} , {1}"
         return texto.format(self.rut, self.nombre)
+
+class Empleado(models.Model):
+    CARGOS = (
+        ('M', 'Médico'),
+        ('A', 'Administrador'),
+        ('F', 'Farmaceutico'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    cargo = models.CharField(max_length=20,choices=CARGOS)
+    def get_cargo(self,username):
+        try:
+            return Empleado.objects.get(user=username)
+        except Empleado.DoesNotExist:
+            return None

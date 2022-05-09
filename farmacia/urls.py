@@ -1,9 +1,16 @@
+from django.shortcuts import redirect
 from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.login),
     # Login.
-    path('', views.login, name="login"),
+    path('login', views.login, name="login"),
+    # Logout.
+    path('logout', views.logout, name="logout"),
+    # Register.
+    path('register', views.register, name="register"),
+    path('redireccionar', views.redireccionar, name="redireccionar"),
     # Medico.
     path('consulta-medicamentos', views.consultaMedicamentos, name="medicamentos"),
     path('recetas', views.recetas, name="prescripciones"),
