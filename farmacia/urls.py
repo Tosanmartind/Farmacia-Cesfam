@@ -10,7 +10,8 @@ urlpatterns = [
     path('logout', views.logout, name="logout"),
     # Register.
     path('register', views.register, name="register"),
-    path('redireccionar', views.redireccionar, name="redireccionar"),
+    # Invitado.
+    path('invitado', views.invitado, name="invitado"),
     # Medico.
     path('consulta-medicamentos', views.consultaMedicamentos, name="medicamentos"),
     path('recetas', views.recetas, name="prescripciones"),

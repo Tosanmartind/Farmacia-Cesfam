@@ -32,8 +32,10 @@ class Empleado(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     cargo = models.CharField(max_length=20,choices=CARGOS)
-    def get_cargo(self,username):
+    def get_cargo(id):
         try:
-            return Empleado.objects.get(user=username)
+            h =User.objects.get(pk=id)
+            cargo = h.empleado.cargo
+            return  cargo
         except Empleado.DoesNotExist:
             return None

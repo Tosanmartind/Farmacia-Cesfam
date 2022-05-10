@@ -1,9 +1,11 @@
+from urllib.request import Request
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
 from .models import Medicamento
+from .models import Empleado
 from .forms import NewUserForm
 
 # Login.
@@ -19,7 +21,18 @@ def login(request):
             # Save session as cookie to login the user
             login_auth(request, user)
             # Success, now let's login the user.    
-            return redirect('medicamentos')
+            cargo = Empleado.get_cargo(user.pk)
+            if cargo == 'M':
+                medicamentoListar = Medicamento.objects.all()
+                return render(request, "medico/consulta_medicamento.html", {"medicamento": medicamentoListar})
+            elif cargo == 'F':
+                return render(request, "farmacia/recepcion_farmacia.html")
+            elif cargo == 'A':
+                medicamentoListar = Medicamento.objects.all()
+                return render(request, "stock/stockAdmin_inventario.html", {"medicamento": medicamentoListar})
+            else:
+                return render(request,'invitado/index.html')
+            
         else:
             return render(request,'login.html',{'error_message': 'Contraseña O Usuario Incorrecto'} )   
     else:
@@ -28,7 +41,8 @@ def login(request):
 def logout(request):
     logout_auth(request)
     return redirect('/login')
-
+def invitado(request):
+    return render(request,'invitado/index.html')
 # Registrar
 def register(request):
     form = NewUserForm()
