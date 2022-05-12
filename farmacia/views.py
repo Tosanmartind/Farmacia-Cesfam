@@ -32,7 +32,8 @@ def login(request):
                 medicamentoListar=requests.get('http://127.0.0.1:8000/api/medicamentos/').json()
                 return render(request, "medico/consulta_medicamento.html", {"response": medicamentoListar})
             elif cargo == 'F':
-                return render(request, "farmacia/recepcion_farmacia.html")
+                prescripcionListar = ListaMedicamentos.objects.select_related('prescripcion', 'medicamento')
+                return render(request, "farmacia/recepcion_farmacia.html", {"prescripcion": prescripcionListar})
             elif cargo == 'A':
                 medicamentoListar = Medicamento.objects.all()
                 return render(request, "stock/stockAdmin_inventario.html", {"medicamento": medicamentoListar})
