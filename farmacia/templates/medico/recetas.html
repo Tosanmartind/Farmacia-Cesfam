@@ -11,62 +11,24 @@
   </div>
 </div>
 <div class="contenedor-prescripciones">
+  {% for p in response %}
   <div class="card">
     <div class="card-body">
-      <h1 class="card-title">Medico: Gominez Fernander Zoto Lorempal</h1>
-      <h1 class="card-title">Paciente: Gorzalian Formol Picalml</h1>
+      <h1 class="card-title">Medico: {{p.medico}}</h1>
+      <h1 class="card-title">Paciente: {{p.paciente}}</h1>
       <div class="m-3"></div>
       <h4 class="card-title text-center p-2">Receta</h4>
-      <p class="card-text">Clorafalamina 100 mg: 1 comprimido cada 24 hrs x 30 dias</p>
-      <p class="card-text">Prolomax 200 mg: 2 comprimido cada 8 hrs x 10 dias</p>
-      <p class="card-text">Buforgot 150 mg: 1 comprimido cada 5 hrs x 3 dias</p>
+      <p class="card-text">{{p.medicamento}}: {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x {{p.dias_tratamiento}} dias</p>
     </div>
     <div class="row m-3">
       <div class="col">
-        <p class="card-text text-start">Fecha: 20/04/2022</p>
+        <p class="card-text text-start">Fecha: {{p.fecha_entrega}}</p>
       </div>
       <div class="col">
-        <p class="card-text text-end">Ex: 10/05/2022</p>
+        <p class="card-text text-end">Ex: {{p.fecha_expira}}</p>
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-body">
-      <h1 class="card-title">Medico: Gominez Fernander Zoto Lorempal</h1>
-      <h1 class="card-title">Paciente: Gorzalian Formol Picalml</h1>
-      <div class="m-3"></div>
-      <h4 class="card-title text-center p-2">Receta</h4>
-      <p class="card-text">Clorafalamina 100 mg: 1 comprimido cada 24 hrs x 30 dias</p>
-      <p class="card-text">Prolomax 200 mg: 2 comprimido cada 8 hrs x 10 dias</p>
-      <p class="card-text">Buforgot 150 mg: 1 comprimido cada 5 hrs x 3 dias</p>
-    </div>
-    <div class="row m-3">
-      <div class="col">
-        <p class="card-text text-start">Fecha: 20/04/2022</p>
-      </div>
-      <div class="col">
-        <p class="card-text text-end">Ex: 10/05/2022</p>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-body">
-      <h1 class="card-title">Medico: Gominez Fernander Zoto Lorempal</h1>
-      <h1 class="card-title">Paciente: Gorzalian Formol Picalml</h1>
-      <div class="m-3"></div>
-      <h4 class="card-title text-center p-2">Receta</h4>
-      <p class="card-text">Clorafalamina 100 mg: 1 comprimido cada 24 hrs x 30 dias</p>
-      <p class="card-text">Prolomax 200 mg: 2 comprimido cada 8 hrs x 10 dias</p>
-      <p class="card-text">Buforgot 150 mg: 1 comprimido cada 5 hrs x 3 dias</p>
-    </div>
-    <div class="row m-3">
-      <div class="col">
-        <p class="card-text text-start">Fecha: 20/04/2022</p>
-      </div>
-      <div class="col">
-        <p class="card-text text-end">Ex: 10/05/2022</p>
-      </div>
-    </div>
-  </div>
+  {% endfor %}
 </div>
 {% endblock %}

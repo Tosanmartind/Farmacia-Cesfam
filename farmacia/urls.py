@@ -1,10 +1,20 @@
 from django.shortcuts import redirect
-from django.urls import path
+from django.urls import path, include
 from . import views
 
+#REST Framework 
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('prescripciones', views.PrescripcionViewSet)
+router.register('medicamentos', views.MedicamentoViewSet)
+router.register('lista-medicamentos', views.ListaMedicamentosViewSet)
+
 urlpatterns = [
-    path('', views.login),
+    # REST Framework
+    path('api/', include(router.urls)),
     # Login.
+    path('', views.login),
     path('login', views.login, name="login"),
     # Logout.
     path('logout', views.logout, name="logout"),

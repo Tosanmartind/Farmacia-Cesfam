@@ -1,12 +1,18 @@
-from urllib.request import Request
+from pydoc import describe
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
-from .models import Medicamento
-from .models import Empleado
+from django.db import connection
+from .models import Medicamento, Empleado, Prescripcion, ListaMedicamentos, Medico
 from .forms import NewUserForm
+#REST
+import requests
+
+#REST Framework
+from rest_framework import viewsets
+from .serializers import PrescripcionSerializer, MedicamentoSerializer, ListaMedicamentosSerializer
 
 # Login.
 def login(request):
@@ -23,8 +29,8 @@ def login(request):
             # Success, now let's login the user.    
             cargo = Empleado.get_cargo(user.pk)
             if cargo == 'M':
-                medicamentoListar = Medicamento.objects.all()
-                return render(request, "medico/consulta_medicamento.html", {"medicamento": medicamentoListar})
+                medicamentoListar=requests.get('http://127.0.0.1:8000/api/medicamentos/').json()
+                return render(request, "medico/consulta_medicamento.html", {"response": medicamentoListar})
             elif cargo == 'F':
                 return render(request, "farmacia/recepcion_farmacia.html")
             elif cargo == 'A':
@@ -54,13 +60,14 @@ def register(request):
         return redirect('/login')
     data = {'form':form}
     return render(request,'registrar.html',data)        
-# Medico.
+# Medico (Consumo api).
 def consultaMedicamentos(request):
-    medicamentoListar = Medicamento.objects.all()
-    return render(request, "medico/consulta_medicamento.html", {"medicamento": medicamentoListar})
+    response=requests.get('http://127.0.0.1:8000/api/medicamentos/').json()
+    return render(request, "medico/consulta_medicamento.html", {"response": response})
 
 def recetas(request):
-    return render(request, "medico/recetas.html")
+    response=requests.get('http://127.0.0.1:8000/api/prescripciones/').json()
+    return render(request, "medico/recetas.html", {"response": response})
 
 def generarPrescripciones(request):
     return render(request, "medico/generar_prescripcion.html")
@@ -70,7 +77,9 @@ def recepcionEntrega(request):
     return render(request, "farmacia/recepcion_entrega.html")
 
 def recepcionFarmacia(request):
-    return render(request, "farmacia/recepcion_farmacia.html")
+    if request.method == 'GET':
+        prescripcionListar = ListaMedicamentos.objects.select_related('prescripcion', 'medicamento')
+        return render(request, "farmacia/recepcion_farmacia.html", {"prescripcion": prescripcionListar})
 
 # Stock.
 def adminInventario(request):
@@ -120,3 +129,17 @@ def modificarMedicamentos(request, codigo):
         medicamento.save()  
 
         return redirect('inventario')
+
+#REST Framework viewsets
+
+class PrescripcionViewSet(viewsets.ModelViewSet):
+    queryset = Prescripcion.objects.all()
+    serializer_class = PrescripcionSerializer
+
+class MedicamentoViewSet(viewsets.ModelViewSet):
+    queryset = Medicamento.objects.all()
+    serializer_class = MedicamentoSerializer
+
+class ListaMedicamentosViewSet(viewsets.ModelViewSet):
+    queryset = ListaMedicamentos.objects.all()
+    serializer_class = ListaMedicamentosSerializer

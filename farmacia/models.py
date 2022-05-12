@@ -13,16 +13,16 @@ class Medicamento(models.Model):
     cantidad = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        texto = "{0}, {1} Comprimidos,  {2}mg , ${3}"
-        return texto.format(self.descripcion, self.contenido, self.gramaje, self.precio)
+        texto = "{0}"
+        return texto.format(self.descripcion)
 
 class Medico(models.Model):
     rut = models.CharField(primary_key=True, max_length=10)
     nombre = models.CharField(max_length=40)
 
     def __str__(self):
-        texto = "{0} , {1}"
-        return texto.format(self.rut, self.nombre)
+        texto = "{0}"
+        return texto.format(self.nombre)
 
 class Empleado(models.Model):
     CARGOS = (
@@ -39,3 +39,21 @@ class Empleado(models.Model):
             return  cargo
         except Empleado.DoesNotExist:
             return None
+
+class Prescripcion(models.Model):
+    prescripcion_id = models.AutoField(primary_key=True)
+    medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
+    paciente = models.CharField(max_length=40)
+    correo = models.EmailField()
+    telefono = models.PositiveSmallIntegerField()
+    fecha_entrega = models.DateField()
+    fecha_expira = models.DateField()
+
+
+class ListaMedicamentos(models.Model):
+    lista_id = models.AutoField(primary_key=True)
+    medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
+    comprimidos = models.PositiveSmallIntegerField(default=0)
+    frecuencia_hrs = models.PositiveSmallIntegerField(default=0)
+    dias_tratamiento = models.PositiveSmallIntegerField(default=0)
+    prescripcion = models.ForeignKey(Prescripcion, on_delete=models.CASCADE)

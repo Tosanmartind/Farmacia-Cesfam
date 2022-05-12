@@ -15,46 +15,16 @@
     </tr>
   </thead>
   <tbody>
+    {% for m in response %}
     <tr>
-      <th>1</th>
-      <td>Borfamilamienl</td>
-      <td>MarkLab</td>
-      <td>30 comprimidos</td>
-      <td>200mg</td>
-      <td>15</td>
+      <th>{{m.codigo}}</th>
+      <td>{{m.descripcion}}</td>
+      <td>{{m.fabricante}}</td>
+      <td>{{m.contenido}} comprimidos</td>
+      <td>{{m.gramaje}} gm</td>
+      <td>{{m.cantidad}}</td>
     </tr>
-    <tr>
-      <th>1</th>
-      <td>Borfamilamienl</td>
-      <td>MarkLab</td>
-      <td>30 comprimidos</td>
-      <td>200mg</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Borfamilamienl</td>
-      <td>MarkLab</td>
-      <td>30 comprimidos</td>
-      <td>200mg</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Borfamilamienl</td>
-      <td>MarkLab</td>
-      <td>30 comprimidos</td>
-      <td>200mg</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Borfamilamienl</td>
-      <td>MarkLab</td>
-      <td>30 comprimidos</td>
-      <td>200mg</td>
-      <td>15</td>
-    </tr>
+    {% endfor %}
   </tbody>
 </table>
 {% endblock %}
