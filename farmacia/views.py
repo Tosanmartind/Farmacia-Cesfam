@@ -1,18 +1,18 @@
-from pydoc import describe
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
-from django.db import connection
-from .models import Medicamento, Empleado, Prescripcion, ListaMedicamentos, Medico
+from .models import Medicamento, Empleado, Prescripcion, Medico
 from .forms import NewUserForm
 #REST
 import requests
 
 #REST Framework
 from rest_framework import viewsets
-from .serializers import PrescripcionSerializer, MedicamentoSerializer, ListaMedicamentosSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import PrescripcionSerializer, MedicamentoSerializer
 
 # Login.
 def login(request):
@@ -32,8 +32,7 @@ def login(request):
                 medicamentoListar=requests.get('http://127.0.0.1:8000/api/medicamentos/').json()
                 return render(request, "medico/consulta_medicamento.html", {"response": medicamentoListar})
             elif cargo == 'F':
-                prescripcionListar = ListaMedicamentos.objects.select_related('prescripcion', 'medicamento')
-                return render(request, "farmacia/recepcion_farmacia.html", {"prescripcion": prescripcionListar})
+                return render(request, "farmacia/recepcion_farmacia.html")
             elif cargo == 'A':
                 medicamentoListar = Medicamento.objects.all()
                 return render(request, "stock/stockAdmin_inventario.html", {"medicamento": medicamentoListar})
@@ -67,21 +66,57 @@ def consultaMedicamentos(request):
     return render(request, "medico/consulta_medicamento.html", {"response": response})
 
 def recetas(request):
-    response=requests.get('http://127.0.0.1:8000/api/prescripciones/').json()
+    response=requests.get('http://127.0.0.1:8000/apiprescripciones').json()
     return render(request, "medico/recetas.html", {"response": response})
 
 def generarPrescripciones(request):
-    return render(request, "medico/generar_prescripcion.html")
+    if request.method == 'GET':
+        response=requests.get('http://127.0.0.1:8000/apiprescripciones').json()
+        return render(request, "medico/generar_prescripcion.html", {"response": response})
+    if request.method == 'POST':
+
+        paciente = request.POST['txtPaciente']
+        correo = request.POST['txtCorreo']
+        telefono = request.POST['numTelefono']
+        fecha_entrega = request.POST['fechaEntrega']
+        fecha_expira = request.POST['fechaExp']
+        comprimidos = request.POST['numCantidad']
+        frecuencia_hrs = request.POST['numFrecuencia']
+        dias_tratamiento = request.POST['numDias']
+
+        rutMedico = request.POST['txtMedico']
+        medico = Medico.objects.get(rut=rutMedico)
+
+        nameMedicamento = request.POST['txtMedicamento']
+        medicamento = Medicamento.objects.get(descripcion=nameMedicamento)
+    
+        prescripcion = Prescripcion.objects.create(medico=medico, paciente=paciente, correo=correo, telefono=telefono, fecha_entrega=fecha_entrega, fecha_expira=fecha_expira, medicamento=medicamento, comprimidos=comprimidos, frecuencia_hrs=frecuencia_hrs, dias_tratamiento=dias_tratamiento)
+        return redirect('prescripciones')
 
 # Farmacia.
-def recepcionEntrega(request):
-    return render(request, "farmacia/recepcion_entrega.html")
+def recepcionEntrega(request, codigo):
+    if request.method == 'GET':
+        prescripcion = Prescripcion.objects.get(prescripcion_id=codigo)
+        return render(request, "farmacia/recepcion_entrega.html", {"prescripcion": prescripcion})
+    
+    if request.method == 'POST':
+        """
+        medicamento = request.POST['txtMedicamento']
+        correo = request.POST['txtCorreo']
+        telefono = request.POST['numTelefono']
 
+        """
+        return redirect('recepcion-farmacia')
+    
 def recepcionFarmacia(request):
     if request.method == 'GET':
-        prescripcionListar = ListaMedicamentos.objects.select_related('prescripcion', 'medicamento')
+        prescripcionListar = Prescripcion.objects.select_related('medicamento')
         return render(request, "farmacia/recepcion_farmacia.html", {"prescripcion": prescripcionListar})
 
+def recepcionEliminar(request, codigo):
+    prescripcion = Prescripcion.objects.get(prescripcion_id=codigo)
+    prescripcion.delete()
+    return redirect('recepcion-farmacia')
 # Stock.
 def adminInventario(request):
     medicamentoListar = Medicamento.objects.all()
@@ -90,7 +125,7 @@ def adminInventario(request):
 def agregarMedicamentos(request):
     if request.method == 'GET':
         return render(request, "stock/agregar_medicamentos.html")
-    elif request.method == 'POST':
+    if request.method == 'POST':
         descripcion	= request.POST['txtDescripcion']
         fabricante = request.POST['txtFabricante'] 
         contenido = request.POST['numContenido'] 
@@ -133,14 +168,16 @@ def modificarMedicamentos(request, codigo):
 
 #REST Framework viewsets
 
-class PrescripcionViewSet(viewsets.ModelViewSet):
-    queryset = Prescripcion.objects.all()
-    serializer_class = PrescripcionSerializer
-
 class MedicamentoViewSet(viewsets.ModelViewSet):
     queryset = Medicamento.objects.all()
     serializer_class = MedicamentoSerializer
 
-class ListaMedicamentosViewSet(viewsets.ModelViewSet):
-    queryset = ListaMedicamentos.objects.all()
-    serializer_class = ListaMedicamentosSerializer
+@api_view(["GET"])
+def prescripciones(request):
+    presquery = Prescripcion.objects.all()
+    medquery = Medicamento.objects.all()
+    ObjPrescripcionSerializer = PrescripcionSerializer(presquery, many=True)
+    ObjMedicamentoSerializer = MedicamentoSerializer(medquery, many=True)
+    ResultModel = ObjPrescripcionSerializer.data+ObjMedicamentoSerializer.data
+    return Response(ResultModel)
+

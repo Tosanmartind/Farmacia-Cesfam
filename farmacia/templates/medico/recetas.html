@@ -12,13 +12,14 @@
 </div>
 <div class="contenedor-prescripciones">
   {% for p in response %}
+  {% if p.medicamento != None %}
   <div class="card">
     <div class="card-body">
       <h1 class="card-title">Medico: {{p.medico}}</h1>
       <h1 class="card-title">Paciente: {{p.paciente}}</h1>
       <div class="m-3"></div>
       <h4 class="card-title text-center p-2">Receta</h4>
-      <p class="card-text">{{p.medicamento}}: {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x {{p.dias_tratamiento}} dias</p>
+      <p class="card-text">Medicamento(N°{{p.medicamento}}) : {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x {{p.dias_tratamiento}} dias</p>
     </div>
     <div class="row m-3">
       <div class="col">
@@ -29,6 +30,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
   {% endfor %}
 </div>
 {% endblock %}

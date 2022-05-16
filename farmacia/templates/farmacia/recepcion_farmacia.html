@@ -11,10 +11,9 @@
   {% for p in prescripcion %}
   <div class="card">
     <div class="card-body">
-      <h1 class="card-title">Medico: {{p.prescripcion.medico}}</h1>
-      <h1 class="card-title">Paciente: {{p.prescripcion.paciente}}</h1>
+      <h1 class="card-title">Medico: {{p.medico}}</h1>
+      <h1 class="card-title">Paciente: {{p.paciente}}</h1>
       <h4 class="card-subtitle text-center p-2">Receta</h4>
-      {% for p in prescripcion %}
       {% if p.medicamento.cantidad > 0 %}
       <div class="card-header mt-4">Disponibles</div>
       <ul class="list-group list-group-flush">
@@ -26,19 +25,22 @@
         <li class="list-group-item">{{p.medicamento}}: {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x {{p.dias_tratamiento}} dias</li>
       </ul>
       {% endif %}
-      {% endfor %}
       <div class="row m-3">
         <div class="col">
-          <p class="card-text text-start">Fecha: {{p.prescripcion.fecha_entrega}}</p>
+          <p class="card-text text-start">Fecha: {{p.fecha_entrega}}</p>
         </div>
         <div class="col">
-          <p class="card-text text-end">Ex: {{p.prescripcion.fecha_expira}}</p>
+          <p class="card-text text-end">Ex: {{p.fecha_expira}}</p>
         </div>
       </div>
       <div class="row m-2">
         <div class="col">
-          <a href="{% url 'recepcion-entrega' %}" class="btn btn-success">Registrar Entrega</a>
-          <button type="button" class="btn btn-outline-danger">Descartar</button>
+          {% if p.medicamento.cantidad > 0 %}
+          <a href="recepcion-entrega/{{p.prescripcion_id}}" class="btn btn-success">Registrar Entrega</a>
+          {% else %}
+          <a href="recepcion-entrega/{{p.prescripcion_id}}" class="btn btn-success disabled">Registrar Entrega</a>
+          {% endif %}
+          <a href="eliminarRecepcion/{{p.prescripcion_id}}" class="btn btn-outline-danger">Descartar</a>
         </div>
       </div>
     </div>

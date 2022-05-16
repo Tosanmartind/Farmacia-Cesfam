@@ -3,65 +3,72 @@
 {% block title %}Generar Prescripciones{% endblock %}
 {% block content %}
 <h1>Generar prescripcion medica</h1>
-<form>
-  <div class="mb-3">
+<form action="generar-prescripciones" method="POST">{% csrf_token %}
+  <div class="mb-3"> 
     <label for="txtMedico" class="form-label">Nombre Medico</label>
-    <input type="text" class="form-control" id="txtMedico" />
+    <select for="txtMedico" name="txtMedico" class="form-select">
+      {% for p in response %}
+      {% if p.medico != None %}
+      <option class="form-control" id="txtMedico">{{p.medico}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
   </div>
   <div class="mb-3">
     <label for="txtPaciente" class="form-label">Nombre Paciente</label>
-    <input type="text" class="form-control" id="txtPaciente" />
+    <input type="text" class="form-control" name="txtPaciente" id="txtPaciente" />
   </div>
   <div class="mb-3">
     <label for="txtCorreo" class="form-label">Correo electronico</label>
-    <input type="email" class="form-control" id="txtCorreo" />
+    <input type="email" class="form-control" name="txtCorreo" id="txtCorreo" />
   </div>
   <div class="mb-3">
     <label for="numTelefono" class="form-label">Numero telefonico</label>
-    <input type="number" class="form-control" id="numTelefono" />
+    <input type="number" class="form-control" name="numTelefono" id="numTelefono" />
   </div>
   <div class="listaMedicamentos">
     <div class="row">
       <div class="col">
-        <div class="mb-3">
+        <div class="mb-3"> 
           <label for="txtMedicamento" class="form-label">Medicamento</label>
-          <input type="text" class="form-control" id="txtMedicamento" />
+          <select class="form-select" name="txtMedicamento">
+            {% for p in response %}
+            {% if p.descripcion != None %}
+            <option class="form-control" id="txtMedicamento">{{p.descripcion}}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
         </div>
       </div>
       <div class="col">
         <div class="mb-3">
           <label for="numCantidad" class="form-label">Cantidad</label>
-          <input type="number" class="form-control" id="numCantidad" />
+          <input type="number" class="form-control" name="numCantidad" id="numCantidad" />
         </div>
       </div>
       <div class="col">
         <div class="mb-3">
           <label for="numFrecuencia" class="form-label">Frecuencia de horas</label>
-          <input type="number" class="form-control" id="numFrecuencia" />
+          <input type="number" class="form-control" name="numFrecuencia" id="numFrecuencia" />
         </div>
       </div>
       <div class="col">
         <div class="mb-3">
           <label for="numDias" class="form-label">Dias de consumo</label>
-          <input type="text" class="form-control" id="numDias" />
+          <input type="number" class="form-control" name="numDias" id="numDias" />
         </div>
-      </div>
-      <div class="col">
-        <button type="button" id="addMedicamento" class="btn btn-outline-info">+ Agregar Medicamento</button>
       </div>
     </div>
   </div>
   <div class="mb-3">
     <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
-    <input type="date" class="form-control" id="fechaEntrega" />
+    <input type="date" class="form-control" name="fechaEntrega" id="fechaEntrega" />
   </div>
   <div class="mb-3">
     <label for="fechaExp" class="form-label">Fecha de Expiración</label>
-    <input type="date" class="form-control" id="fechaExp" />
+    <input type="date" class="form-control" name="fechaExp" id="fechaExp" />
   </div>
   <button type="submit" class="btn btn-success">Crear Prescripción</button>
   <a href="{% url 'prescripciones' %}" class="btn btn-outline-danger">Cancelar</a>
 </form>
-{% load static %}
-<script src="{% static '/js/medico/generar_prescripcion.js' %}"></script>
 {% endblock %}

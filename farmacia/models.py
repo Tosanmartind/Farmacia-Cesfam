@@ -40,6 +40,10 @@ class Empleado(models.Model):
         except Empleado.DoesNotExist:
             return None
 
+    def __str__(self):
+        texto = "{0}, Cargo: {1}"
+        return texto.format(self.user, self.cargo)
+
 class Prescripcion(models.Model):
     prescripcion_id = models.AutoField(primary_key=True)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
@@ -48,12 +52,11 @@ class Prescripcion(models.Model):
     telefono = models.PositiveSmallIntegerField()
     fecha_entrega = models.DateField()
     fecha_expira = models.DateField()
-
-
-class ListaMedicamentos(models.Model):
-    lista_id = models.AutoField(primary_key=True)
     medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
     comprimidos = models.PositiveSmallIntegerField(default=0)
     frecuencia_hrs = models.PositiveSmallIntegerField(default=0)
     dias_tratamiento = models.PositiveSmallIntegerField(default=0)
-    prescripcion = models.ForeignKey(Prescripcion, on_delete=models.CASCADE)
+
+    def __str__(self):
+        texto = "Medico: {0}, Paciente: {1}, Receta: {2}"
+        return texto.format(self.medico.nombre, self.paciente, self.medicamento.descripcion)

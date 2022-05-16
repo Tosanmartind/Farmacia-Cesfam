@@ -4,15 +4,13 @@ from . import views
 
 #REST Framework 
 from rest_framework import routers
-
 router = routers.DefaultRouter()
-router.register('prescripciones', views.PrescripcionViewSet)
 router.register('medicamentos', views.MedicamentoViewSet)
-router.register('lista-medicamentos', views.ListaMedicamentosViewSet)
 
 urlpatterns = [
     # REST Framework
     path('api/', include(router.urls)),
+    path('apiprescripciones', views.prescripciones),
     # Login.
     path('', views.login),
     path('login', views.login, name="login"),
@@ -28,7 +26,8 @@ urlpatterns = [
     path('generar-prescripciones', views.generarPrescripciones, name="generar-presecipciones"),
     # Farmacia.
     path('recepcion-farmacia', views.recepcionFarmacia, name="recepcion-farmacia"),
-    path('recepcion-entrega', views.recepcionEntrega, name="recepcion-entrega"),
+    path('recepcion-entrega/<codigo>', views.recepcionEntrega, name="recepcion-entrega"),
+    path('eliminarRecepcion/<codigo>', views.recepcionEliminar),
     # Stock.
     path('inventario', views.adminInventario, name="inventario"),
     path('agregar-medicamentos', views.agregarMedicamentos, name="agregar-medicamentos"),
