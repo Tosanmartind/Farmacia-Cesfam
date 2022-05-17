@@ -2,25 +2,44 @@
 
 {% block title %}Entrega Medicamentos{% endblock %}
 {% block content %}
-<h1>Entrega de Medicamentos (Pagar)</h1>
-<form action="recepcion-entrega" method="POST">{% csrf_token %}
-  <div class="form-group mb-3">
-    <label for="txtPago" class="form-label">Medicamento</label>
-    <input type="text" class="form-control" name="" id="txtPago" value="{{prescripcion.medicamento}}" readonly/>
+<h1>Entrega de Medicamentos</h1>
+<div class="carro col-4">
+  <div class="card">
+    <div class="card-header">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart"
+        viewBox="0 0 16 16">
+        <path
+          d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+      </svg>
+      Carrito de Medicamentos
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <form action="recepcion-entrega" method="POST">{% csrf_token %}
+          <div class="mb-3">
+            <li class="list-group-item">Medicamento</li>
+            <input type="text" class="form-control" name="txtMedicamento" id="txtMedicamento" value="{{prescripcion.medicamento}}" readonly />
+          </div>
+          <div class="mb-3">
+            <li class="list-group-item">Info Paciente</li>
+            <div class="form-floating">
+              <label for="txtpaciente" class="form-label fw-light p-1" style="font-size: 14px;" >Nombre :</label>
+              <input type="text" class="form-control" name="txtpaciente" id="txtpaciente" value="{{prescripcion.paciente}}" readonly />
+            </div>
+            <div class="form-floating">
+              <label for="txtCorreo" class="form-label fw-light p-1" style="font-size: 14px;" >Correo :</label>
+              <input type="text" class="form-control" name="txtCorreo" id="txtCorreo" value="{{prescripcion.correo}}" readonly />
+            </div>
+            <div class="form-floating">
+              <label for="numTelefono" class="form-label fw-light p-1" style="font-size: 14px;" >Telefono :</label>
+            <input type="text" class="form-control" name="numTelefono" id="numTelefono" value="{{prescripcion.telefono}}" readonly />
+            </div>    
+          </div>
+          <button type="submit" class="btn btn-success">Entregar Medicamentos</button>
+          <a href="{% url 'recepcion-farmacia' %}" class="btn btn-outline-danger">Cancelar Carro</a>
+        </form>
+      </ul>
+    </div>
   </div>
-  <div class="form-group mb-3">
-    <label for="txtPago" class="form-label">Paciente</label>
-    <input type="text" class="form-control" name="" id="txtPago" value="{{prescripcion.paciente}}" readonly/>
-  </div>
-  <div class="form-group mb-3">
-    <label for="txtPago" class="form-label">Correo de paciente</label>
-    <input type="text" class="form-control" name="" id="txtPago" value="{{prescripcion.correo}}" readonly/>
-  </div>
-  <div class="form-group mb-3">
-    <label for="txtPago" class="form-label">Numero telefonico de paciente</label>
-    <input type="text" class="form-control" name="" id="txtPago" value="{{prescripcion.telefono}}" readonly/>
-  </div>
-  <button type="submit" class="btn btn-success">Continuar...</button>
-  <a href="{% url 'recepcion-farmacia' %}" class="btn btn-outline-danger">Cancelar</a>
-</form>
+</div>
 {% endblock %}

@@ -98,14 +98,13 @@ def recepcionEntrega(request, codigo):
     if request.method == 'GET':
         prescripcion = Prescripcion.objects.get(prescripcion_id=codigo)
         return render(request, "farmacia/recepcion_entrega.html", {"prescripcion": prescripcion})
-    
+        
     if request.method == 'POST':
-        """
         medicamento = request.POST['txtMedicamento']
+        paciente = request.POST['txtpaciente']
         correo = request.POST['txtCorreo']
         telefono = request.POST['numTelefono']
-
-        """
+        print("(medicamento) : ",medicamento, "(paciente) : ",paciente, "(correo) : ",correo, "(telefono) : ",telefono)
         return redirect('recepcion-farmacia')
     
 def recepcionFarmacia(request):

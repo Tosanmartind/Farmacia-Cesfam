@@ -17,12 +17,14 @@
       {% if p.medicamento.cantidad > 0 %}
       <div class="card-header mt-4">Disponibles</div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{p.medicamento}}: {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x {{p.dias_tratamiento}} dias</li>
+        <li class="list-group-item">{{p.medicamento}}: {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x
+          {{p.dias_tratamiento}} dias</li>
       </ul>
       {% else %}
       <div class="card-header mt-4">No Disponibles</div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{p.medicamento}}: {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x {{p.dias_tratamiento}} dias</li>
+        <li class="list-group-item">{{p.medicamento}}: {{p.comprimidos}} comprimido cada {{p.frecuencia_hrs}}hrs x
+          {{p.dias_tratamiento}} dias</li>
       </ul>
       {% endif %}
       <div class="row m-3">
@@ -36,9 +38,9 @@
       <div class="row m-2">
         <div class="col">
           {% if p.medicamento.cantidad > 0 %}
-          <a href="recepcion-entrega/{{p.prescripcion_id}}" class="btn btn-success">Registrar Entrega</a>
+          <a href="recepcion-entrega/{{p.prescripcion_id}}" class="btn btn-success">Agregar al carro</a>
           {% else %}
-          <a href="recepcion-entrega/{{p.prescripcion_id}}" class="btn btn-success disabled">Registrar Entrega</a>
+          <a href="recepcion-entrega/{{p.prescripcion_id}}" class="btn btn-success disabled">Agregar al carro</a>
           {% endif %}
           <a href="eliminarRecepcion/{{p.prescripcion_id}}" class="btn btn-outline-danger">Descartar</a>
         </div>
