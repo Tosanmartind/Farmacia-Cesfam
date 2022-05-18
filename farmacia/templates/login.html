@@ -27,9 +27,9 @@
         <div class="wrapper">
             <form action="#" method="post">
                 {% csrf_token %}
-                <div class="col-md-8 col-md-offset-2">
+                <div class="card m-5 p-5 col-md-9 col-md-offset-2">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Login</div>
+                        <div class="card-title text-center fs-3 panel-heading pb-3">Iniciar Sesion</div>
                         <div class="panel-body">
                             {% if error_message %}
                             <p class="text-white bg-danger p-3 mb-2">
@@ -37,21 +37,21 @@
                             </p>
                             {% endif %}
                             <div class="form-group clearfix">
-                                <label for="username" class="col control-label text-right">Username:</label>
+                                <label for="username" class="col control-label text-right fw-light" style="font-size: 16px;">Username:</label>
                                 <div class="col">
                                     <input name="username" value="" type="text" class="form-control" />
                                 </div>
                             </div>
-                            <div class="form-group clearfix">
-                                <label for="password" class="col-md-4 control-label text-right">Password:</label>
+                            <div class="form-group clearfix pt-2">
+                                <label for="password" class="col-md-4 control-label text-right fw-light" style="font-size: 16px;" >Password:</label>
                                 <div class="col">
                                     <input name="password" type="password" class="form-control" />
                                 </div>
                             </div>
-                            <div class="col">
-                                <input name="login" type="submit" value="Login" class="btn btn-success" />
+                            <div class="align-content-center pt-4">
+                                <input name="login" type="submit" value="Login" class="btn btn-success btn-sm" style="width: 5em;"/>
                                 &nbsp;
-                                <a href="{% url 'register' %}">Registrarse</a>
+                                <a class="pt-2 text-center btn btn-outline-primary btn-sm" style="width: 7em;" href="{% url 'register' %}">Registrarse</a>
                             </div>
                         </div>
                     </div>

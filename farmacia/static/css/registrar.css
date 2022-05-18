@@ -36,3 +36,10 @@ header {
     border-radius: 40%;
 }
 
+.container {
+    margin: 21px 0 0 21px;
+}
+
+h1 {
+    font-size: 20px;
+}

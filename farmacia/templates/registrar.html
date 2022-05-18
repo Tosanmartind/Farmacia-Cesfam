@@ -14,56 +14,46 @@
           type="image/png"
           href="{% static 'favicon.ico' %}"/>
     <title>Registrar</title>
-
-
 </head>
-<header>
-    <div class="navbar">
-        <div class="contenedor-logo">
-            <img class="logo"
-                 src="{% static '/img/cesfam_logo.png' %}"
-                 width="106"
-                 height="59"/>
-        </div>
-    </div>
-</header>
-<main>
-    <a href="{% url 'medicamentos' %}" class="btn btn-secondary btn-lg">Link medico</a>
-    <a href="{% url 'recepcion-farmacia' %}"
-       class="btn btn-secondary btn-lg">Link recepción</a>
-    <a href="{% url 'inventario' %}" class="btn btn-secondary btn-lg">Link stockAdmin</a>
-</main>
-
 <body class="override">
-   {% block content %}
-    <div class="row">
-        <div class="col-1"></div>
-        <h1>Registro De Usuario</h1>
-    <hr style="width: 100%;">
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col">
-        <div class="form-group">
-        <form method="POST" action="">
-            {% csrf_token %}
-            Ingrese Nombre De Usuario:
-            {{ form.username}}</div>
-            <div class="form-group">
-            Ingrese Email
-            {{ form.email}}</div>
-            <div class="form-group">
-            Ingrese Contraseña
-            {{ form.password1}}</div>
-            <div class="form-group">
-            Repita Contraseña
-            {{ form.password2}}</div>
-        
-            
-            <input type="submit" name="Create User" value="Registrarse">
-        </form>
-    </div>
-    </div>
-    </div>
-{% endblock %}
+    <header>
+        <div class="navbar">
+            <div class="contenedor-logo">
+                <img class="logo" src="{% static '/img/cesfam_logo.png' %}" width="106" height="59" />
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        {% block content %}
+        <div class="row">
+            <h1 style="font-size: 24px;">Registro De Usuario</h1>
+            <div class="row">
+                <div class="col-4 card">
+                    <div class="card-body m-3">
+                        <form method="POST" action="">{% csrf_token %}
+                            <label class="text-right">Ingrese Nombre De Usuario:</label>
+                            <div class="form-group">
+                                {{form.username}}
+                            </div>
+                            <label class="text-right">Ingrese Email:</label>
+                            <div class="form-group">
+                                {{form.email}}
+                            </div>
+                            <label class="text-right">Ingrese Contraseña:</label>
+                            <div class="form-group"> 
+                                {{form.password1}}
+                            </div>
+                            <label class="text-right">Repita Contraseña:</label>
+                            <div class="form-group">
+                                {{form.password2}}
+                            </div>
+                            <input class="btn btn-success mt-2" type="submit" name="Create User" value="Registrarse">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
 </body>
 </html>
