@@ -3,3 +3,4 @@ PIP INSTALL:
   django
   djangorestframework
   requests
+  twilio

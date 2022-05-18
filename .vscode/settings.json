@@ -2,23 +2,6 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": false,
     "workbench.colorCustomizations": {
-        "activityBar.activeBackground": "#c03aff",
-        "activityBar.activeBorder": "#ffad00",
-        "activityBar.background": "#c03aff",
-        "activityBar.foreground": "#e7e7e7",
-        "activityBar.inactiveForeground": "#e7e7e799",
-        "activityBarBadge.background": "#ffad00",
-        "activityBarBadge.foreground": "#15202b",
-        "sash.hoverBorder": "#c03aff",
-        "statusBar.background": "#b007ff",
-        "statusBar.foreground": "#e7e7e7",
-        "statusBarItem.hoverBackground": "#c03aff",
-        "statusBarItem.remoteBackground": "#b007ff",
-        "statusBarItem.remoteForeground": "#e7e7e7",
-        "titleBar.activeBackground": "#b007ff",
-        "titleBar.activeForeground": "#e7e7e7",
-        "titleBar.inactiveBackground": "#b007ff99",
-        "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#b007ff"
 }

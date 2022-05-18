@@ -1,3 +1,4 @@
+from email import message
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
@@ -5,6 +6,7 @@ from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
 from .models import Medicamento, Empleado, Prescripcion, Medico
 from .forms import NewUserForm
+import datetime
 #REST
 import requests
 
@@ -13,7 +15,15 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import PrescripcionSerializer, MedicamentoSerializer
-
+#Email 
+from django.core.mail import send_mail
+from django.conf import settings
+# Twilio Whastaap API
+##from twilio.rest import Client
+##Credenciales
+#account_sid = 'AC5a167083784243c53041d92666ef8ee9'
+#auth_token = '297e3c47abf511051ce9c7ea525a2bad'
+#client = Client(account_sid, auth_token)
 # Login.
 def login(request):
     if request.method == 'POST':
@@ -32,7 +42,8 @@ def login(request):
                 medicamentoListar=requests.get('http://127.0.0.1:8000/api/medicamentos/').json()
                 return render(request, "medico/consulta_medicamento.html", {"response": medicamentoListar})
             elif cargo == 'F':
-                return render(request, "farmacia/recepcion_farmacia.html")
+                prescripcionListar = Prescripcion.objects.select_related('medicamento')
+                return render(request, "farmacia/recepcion_farmacia.html", {"prescripcion": prescripcionListar})
             elif cargo == 'A':
                 medicamentoListar = Medicamento.objects.all()
                 return render(request, "stock/stockAdmin_inventario.html", {"medicamento": medicamentoListar})
@@ -98,12 +109,24 @@ def recepcionEntrega(request, codigo):
     if request.method == 'GET':
         prescripcion = Prescripcion.objects.get(prescripcion_id=codigo)
         return render(request, "farmacia/recepcion_entrega.html", {"prescripcion": prescripcion})
-        
+
     if request.method == 'POST':
         medicamento = request.POST['txtMedicamento']
         paciente = request.POST['txtpaciente']
         correo = request.POST['txtCorreo']
         telefono = request.POST['numTelefono']
+        #message = client.messages.create(
+        #    body='Cosas',
+        #    from_='whatsapp:+17262004616',
+        #    to=phone
+        #)  
+        fecha = datetime.datetime.now()
+        fechastr =  fecha.strftime("%m/%d/%Y, %H:%M:%S")
+        subject = 'Receta entregada a '+paciente
+        message = 'Sr(a) '+paciente+' usted ha retirado los siguientes medicamentos: '+medicamento+ ' el día y la hora: '+fechastr
+        email_from = 'duocfarmacia@gmail.com'
+        email_to_list = [correo]
+        send_mail(subject,message,email_from, email_to_list)
         print("(medicamento) : ",medicamento, "(paciente) : ",paciente, "(correo) : ",correo, "(telefono) : ",telefono)
         return redirect('recepcion-farmacia')
     
