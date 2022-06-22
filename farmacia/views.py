@@ -19,11 +19,11 @@ from .serializers import PrescripcionSerializer, MedicamentoSerializer
 from django.core.mail import send_mail
 from django.conf import settings
 # Twilio Whastaap API
-##from twilio.rest import Client
+from twilio.rest import Client
 ##Credenciales
-#account_sid = 'AC5a167083784243c53041d92666ef8ee9'
-#auth_token = '297e3c47abf511051ce9c7ea525a2bad'
-#client = Client(account_sid, auth_token)
+account_sid = 'AC5a167083784243c53041d92666ef8ee9'
+auth_token = '46ca5eb21a23c9bbc424675ffe4fc2ac'
+client = Client(account_sid, auth_token)
 # Login.
 def login(request):
     if request.method == 'POST':
@@ -115,11 +115,7 @@ def recepcionEntrega(request, codigo):
         paciente = request.POST['txtpaciente']
         correo = request.POST['txtCorreo']
         telefono = request.POST['numTelefono']
-        #message = client.messages.create(
-        #    body='Cosas',
-        #    from_='whatsapp:+17262004616',
-        #    to=phone
-        #)  
+        
         fecha = datetime.datetime.now()
         fechastr =  fecha.strftime("%m/%d/%Y, %H:%M:%S")
         subject = 'Receta entregada a '+paciente
@@ -127,6 +123,12 @@ def recepcionEntrega(request, codigo):
         email_from = 'duocfarmacia@gmail.com'
         email_to_list = [correo]
         send_mail(subject,message,email_from, email_to_list)
+        mensaje = client.messages.create(
+            body=message,
+            from_='+17262004616',
+            to='+'+telefono
+        )  
+        mensaje.sid
         print("(medicamento) : ",medicamento, "(paciente) : ",paciente, "(correo) : ",correo, "(telefono) : ",telefono)
         return redirect('recepcion-farmacia')
     
